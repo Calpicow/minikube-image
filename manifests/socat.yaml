@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: socat
+  namespace: kube-system
+spec:
+  containers:
+    - name: busybox
+      image: calpicow/alpine-socat:latest
+      imagePullPolicy: IfNotPresent
+      command:
+        - socat
+        - 'tcp-listen:8001,reuseaddr,fork'
+        - 'tcp:10.96.0.1:443'
+      ports:
+        - containerPort: 8001
+          hostPort: 8001
